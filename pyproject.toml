@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "converter"
+version = "0.1.0"
+description = ""
+authors = ["Danya <azathothdevk@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+SQLAlchemy = "^2.0.10"
+dependency-injector = "^4.41.0"
+fastapi = "^0.95.1"
+pydantic = "^1.10.7"
+requests = "^2.29.0"
+uvicorn = "^0.21.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
