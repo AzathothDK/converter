@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from models import Currency
 
-token = 'feaf3e9f5c5939f46ed617cb3b1d76b3'
+token = ''
 API_URL = f"http://api.coinlayer.com/live?access_key={token}"
 
 
