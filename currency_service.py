@@ -1,15 +1,22 @@
 import requests
 from sqlalchemy.orm import Session
+from datetime import datetime, timedelta
 
 from models import Currency
 
-token = ''
+token = 'feaf3e9f5c5939f46ed617cb3b1d76b3'
 API_URL = f"http://api.coinlayer.com/live?access_key={token}"
 
 
 class CurrencyService:
     def __init__(self, db: Session):
         self.db = db
+        self.last_update = datetime.now() - timedelta(minutes=5)
+
+
+    def should_update(self, minutes: int = 5) -> bool:
+        return (datetime.now() - self.last_update) >= timedelta(minutes=minutes)
+
 
     def fetch_exchange_rates(self):
         response = requests.get(API_URL)
@@ -19,6 +26,7 @@ class CurrencyService:
             return {}
         else:
             return response.json().get("rates", {}) 
+
 
     def update_exchange_rates(self):
         exchange_rates = self.fetch_exchange_rates()
@@ -30,6 +38,8 @@ class CurrencyService:
                 currency = Currency(code=code, rate=rate)
                 self.db.add(currency)
         self.db.commit()
+        self.last_update = datetime.now()
+        
 
     def convert_currency(self, from_currency_code: str, to_currency_code: str, amount: float) -> float:
         from_currency = self.db.query(Currency).filter(Currency.code == from_currency_code).first()
