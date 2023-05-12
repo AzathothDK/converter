@@ -14,10 +14,24 @@ API_URL = f"http://api.coinlayer.com/live?access_key={token}"
 
 ## Запуск
 
-Запустить локально через терминал командой: 
+### Локально: 
 
 ```bash
 poetry run python main.py
+```
+
+### Через Docker:
+
+Соберите докер образ:
+
+```bash
+docker build -t my-application .
+```
+
+Запустите докер контейнер:
+
+```
+docker run -p 8000:8000 my-application
 ```
 
 Перейти по ссылке в терминале и зайти в документацию апи по эндпоинту `/docs`, конечный адрес должен выглядеть так:
